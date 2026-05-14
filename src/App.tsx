@@ -2842,6 +2842,7 @@ const EcommerceView = ({ products, setProducts, setView, setBrowsingDomain, doma
   };
 
   const [isAddingDomain, setIsAddingDomain] = useState(false);
+  const [domainType, setDomainType] = useState<'SUBDOMAIN' | 'CUSTOM'>('SUBDOMAIN');
   const [newDomainUrl, setNewDomainUrl] = useState("");
   const [domainError, setDomainError] = useState("");
   
@@ -2859,21 +2860,39 @@ const EcommerceView = ({ products, setProducts, setView, setBrowsingDomain, doma
   const handleAddDomain = () => {
     if (!newDomainUrl) return;
 
-    let finalName = newDomainUrl.trim().toLowerCase();
+    let finalInput = newDomainUrl.trim().toLowerCase();
+    let finalUrl = "";
+
+    if (domainType === 'SUBDOMAIN') {
+      // Ensure no spaces or special chars for subdomain
+      const cleanName = finalInput.replace(/[^a-z0-9-]/g, '');
+      if (!cleanName) {
+        setDomainError("Invalid shop name.");
+        return;
+      }
+      finalUrl = `${cleanName}.bexobuilder`;
+    } else {
+      // Basic domain validation
+      const domainRegex = /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}$/;
+      if (!domainRegex.test(finalInput)) {
+        setDomainError("Please enter a valid domain (e.g. myshop.com)");
+        return;
+      }
+      finalUrl = finalInput;
+    }
     
-    // Ensure uniqueness across all users in this simulation (via localStorage)
-    const domainExists = domains.some(d => d.url.split('.')[0] === finalName);
+    // Check if domain already exists
+    const domainExists = domains.some(d => d.url.toLowerCase() === finalUrl.toLowerCase());
     
     if (domainExists) {
-      setDomainError("This shop name is already taken. Please try another one.");
+      setDomainError("This domain is already registered. Please try another one.");
       return;
     }
-
-    const finalUrl = `${finalName}.bexobuilder`;
 
     const newDomain: Domain = {
       id: Math.random().toString(36).substr(2, 9),
       url: finalUrl,
+      type: domainType,
       template: "Modern",
       status: 'ACTIVE',
       createdAt: new Date().toLocaleString(),
@@ -3169,45 +3188,83 @@ const EcommerceView = ({ products, setProducts, setView, setBrowsingDomain, doma
               </div>
 
               {isAddingDomain && (
-                <div className="bg-slate-50 p-10 rounded-[40px] border border-slate-200 animate-in zoom-in-95 duration-300 relative">
+                <div className="bg-slate-50 p-10 rounded-[40px] border border-slate-200 animate-in zoom-in-95 duration-300 relative shadow-2xl shadow-slate-200/50">
                   <div className="absolute top-6 right-6">
                     <button onClick={() => setIsAddingDomain(false)} className="p-2 hover:bg-white rounded-xl transition-all">
                        <X className="w-6 h-6 text-slate-400" />
                     </button>
                   </div>
-                  <h5 className="text-[11px] font-black text-brand-600 uppercase tracking-[0.2em] mb-8 px-2">Set Up Shop Link</h5>
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="flex-1 space-y-3">
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          value={newDomainUrl}
-                          onChange={(e) => {
-                            setNewDomainUrl(e.target.value);
-                            if (domainError) setDomainError("");
-                          }}
-                          placeholder="shop-name (e.g. fashion-hub)"
+                  
+                  <div className="flex flex-col gap-8">
+                    <div>
+                      <h5 className="text-[11px] font-black text-brand-600 uppercase tracking-[0.2em] mb-4 px-2">Choose Domain Type</h5>
+                      <div className="flex gap-4 p-1 bg-white border border-slate-200 rounded-2xl w-fit">
+                        <button 
+                          onClick={() => { setDomainType('SUBDOMAIN'); setDomainError(""); }}
                           className={cn(
-                            "w-full px-8 py-5 bg-white border rounded-2xl text-base font-bold outline-none transition-all pr-36",
-                            domainError 
-                              ? "border-rose-500 focus:ring-4 focus:ring-rose-600/10" 
-                              : "border-slate-200 focus:ring-4 focus:ring-brand-600/10 focus:border-brand-600"
+                            "px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                            domainType === 'SUBDOMAIN' ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30" : "text-slate-400 hover:text-slate-600"
                           )}
-                        />
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-50 border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                           .bexobuilder
-                        </div>
+                        >
+                          Free Subdomain
+                        </button>
+                        <button 
+                          onClick={() => { setDomainType('CUSTOM'); setDomainError(""); }}
+                          className={cn(
+                            "px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
+                            domainType === 'CUSTOM' ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30" : "text-slate-400 hover:text-slate-600"
+                          )}
+                        >
+                          Custom Domain
+                        </button>
                       </div>
-                      <p className="text-[10px] font-bold text-slate-400 px-2 italic">
-                        Visitor link: <span className="text-brand-600 font-black">{newDomainUrl || 'myshop'}.bexobuilder</span>
-                      </p>
                     </div>
-                    <button 
-                      onClick={handleAddDomain}
-                      className="px-10 py-5 bg-brand-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-brand-700 transition-all shadow-xl shadow-brand-600/20 active:scale-95 transition-all"
-                    >
-                      Create Shop Link
-                    </button>
+
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-1 space-y-3">
+                        <div className="relative">
+                          <input 
+                            type="text" 
+                            value={newDomainUrl}
+                            onChange={(e) => {
+                              setNewDomainUrl(e.target.value);
+                              if (domainError) setDomainError("");
+                            }}
+                            placeholder={domainType === 'SUBDOMAIN' ? "shop-name" : "myshop.com"}
+                            className={cn(
+                              "w-full px-8 py-5 bg-white border rounded-2xl text-base font-bold outline-none transition-all",
+                              domainType === 'SUBDOMAIN' ? "pr-36" : "pr-8",
+                              domainError 
+                                ? "border-rose-500 focus:ring-4 focus:ring-rose-600/10" 
+                                : "border-slate-200 focus:ring-4 focus:ring-brand-600/10 focus:border-brand-600"
+                            )}
+                          />
+                          {domainType === 'SUBDOMAIN' && (
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-50 border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-black text-slate-400 uppercase tracking-widest pointer-events-none">
+                               .bexobuilder
+                            </div>
+                          )}
+                        </div>
+                        {domainError && (
+                          <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest mt-2 px-2">
+                            {domainError}
+                          </p>
+                        )}
+                        <p className="text-[10px] font-bold text-slate-400 px-2 italic">
+                          {domainType === 'SUBDOMAIN' ? (
+                            <>Visitor link: <span className="text-brand-600 font-black">{newDomainUrl.trim().replace(/[^a-z0-9-]/g, '').toLowerCase() || 'myshop'}.bexobuilder</span></>
+                          ) : (
+                            <>Connect your existing domain to Bexobuilder.</>
+                          )}
+                        </p>
+                      </div>
+                      <button 
+                        onClick={handleAddDomain}
+                        className="px-10 py-5 bg-brand-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-brand-700 transition-all shadow-xl shadow-brand-600/20 active:scale-95 self-start"
+                      >
+                        {domainType === 'SUBDOMAIN' ? "Create Free Link" : "Activate Domain"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -3220,6 +3277,7 @@ const EcommerceView = ({ products, setProducts, setView, setBrowsingDomain, doma
                       <thead>
                         <tr className="border-b border-slate-100 bg-slate-50/50">
                           <th className="px-8 py-6 text-left text-slate-400 font-black">Domain</th>
+                          <th className="px-8 py-6 text-left text-slate-400 font-black">Type</th>
                           <th className="px-8 py-6 text-left text-slate-400 font-black">Template</th>
                           <th className="px-8 py-6 text-left text-slate-400 font-black">Status</th>
                           <th className="px-8 py-6 text-left text-slate-400 font-black">Created</th>
@@ -3237,6 +3295,14 @@ const EcommerceView = ({ products, setProducts, setView, setBrowsingDomain, doma
                                 {domain.url}
                                 <ArrowUpRight className="w-3 h-3 opacity-0 group-hover/link:opacity-100 transition-opacity" />
                               </button>
+                            </td>
+                            <td className="px-8 py-8">
+                               <span className={cn(
+                                 "px-3 py-1.5 rounded-lg text-[9px] font-black tracking-widest uppercase border transition-all",
+                                 domain.type === 'CUSTOM' ? "bg-brand-50 text-brand-600 border-brand-100" : "bg-slate-50 text-slate-400 border-slate-100"
+                               )}>
+                                 {domain.type || 'SUBDOMAIN'}
+                               </span>
                             </td>
                             <td className="px-8 py-8 text-slate-400 font-black">{domain.template}</td>
                             <td className="px-8 py-8">
@@ -3964,7 +4030,16 @@ export default function App() {
   // Initialize state from localStorage
   const getInitialDomains = (): Domain[] => {
     const saved = localStorage.getItem('bexobuilder_domains');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+    try {
+      const parsed = JSON.parse(saved) as Domain[];
+      return parsed.map(d => ({
+        ...d,
+        type: d.type || (d.url.endsWith('.bexobuilder') ? 'SUBDOMAIN' : 'CUSTOM')
+      }));
+    } catch (e) {
+      return [];
+    }
   };
 
   const [activeView, setView] = useState<View>("dashboard");

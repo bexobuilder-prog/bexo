@@ -119,6 +119,7 @@ export interface Stakeholder {
 export interface Domain {
   id: string;
   url: string;
+  type: 'SUBDOMAIN' | 'CUSTOM';
   template: string;
   status: 'ACTIVE' | 'INACTIVE';
   createdAt: string;
