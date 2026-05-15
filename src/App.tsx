@@ -70,6 +70,7 @@ import {
   Pie, 
   Cell 
 } from 'recharts';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { cn } from "./lib/utils";
 import { View, Product, Transaction, Stakeholder, Domain, Category, PaymentMethod, User, Package, PaymentRequest } from "./types";
 import { 
@@ -4409,6 +4410,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen bg-slate-50 font-sans selection:bg-brand-600 selection:text-white">
+      <SpeedInsights />
       <Sidebar 
         activeView={activeView} 
         setView={setView} 
