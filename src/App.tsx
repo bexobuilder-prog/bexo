@@ -462,21 +462,21 @@ const MobileNav = ({ activeView, setView }: { activeView: View, setView: (v: Vie
 }
 
 const KPICard = ({ label, value, trend, trendValue, icon: Icon, color }: any) => (
-  <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-    <div className="flex items-center justify-between mb-4">
-      <div className={cn("p-3 rounded-2xl", color)}>
-        <Icon className="w-6 h-6 text-white" />
+  <div className="bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+    <div className="flex items-center justify-between mb-3 md:mb-4">
+      <div className={cn("p-2 md:p-3 rounded-xl md:rounded-2xl", color)}>
+        <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" />
       </div>
       <div className={cn(
-        "flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full",
+        "flex items-center gap-1 text-[10px] md:text-xs font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-full",
         trend === 'up' ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
       )}>
         {trend === 'up' ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
         {trendValue}%
       </div>
     </div>
-    <h3 className="text-slate-500 text-sm font-bold uppercase tracking-wider mb-1">{label}</h3>
-    <p className="text-2xl font-black text-slate-900">{value}</p>
+    <h3 className="text-slate-500 text-[10px] md:text-sm font-bold uppercase tracking-wider mb-0.5 md:mb-1">{label}</h3>
+    <p className="text-lg md:text-2xl font-black text-slate-900">{value}</p>
   </div>
 );
 
@@ -506,9 +506,9 @@ const OrdersView = ({ orders, setOrders }: { orders: Order[], setOrders: React.D
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden min-h-[500px]">
-        <div className="overflow-x-auto min-w-full">
-          <table className="w-full text-left border-collapse">
+      <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto scrollbar-hide">
+          <table className="w-full text-left border-collapse min-w-[800px] lg:min-w-0">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100/50">
                 <th className="px-8 py-5 text-[10px] font-black text-slate-900 uppercase tracking-widest">Order ID</th>
@@ -620,7 +620,7 @@ const DashboardView = ({ orders, products, formatCurrency }: { orders: Order[], 
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
         <KPICard label="Total Revenue" value={formatCurrency(totalRevenue)} trend="up" trendValue={12} icon={CreditCard} color="bg-brand-600" />
         <KPICard label="Active Products" value={products.length.toString()} trend="up" trendValue={5} icon={PackageIcon} color="bg-brand-950" />
         <KPICard label="New Orders" value={orders.length.toString()} trend="up" trendValue={24} icon={ShoppingBag} color="bg-indigo-600" />
@@ -1214,9 +1214,9 @@ const InventoryView = ({ products, setProducts, categories }: { products: Produc
         </div>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-visible">
-        <div className="overflow-x-auto scrollbar-hide rounded-[32px]">
-          <table className="w-full text-left border-collapse min-w-[1000px]">
+      <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto scrollbar-hide">
+          <table className="w-full text-left border-collapse min-w-[900px]">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100/50">
                 <th className="px-6 py-5 w-12">
@@ -1524,8 +1524,8 @@ const CategoryView = ({ categories, setCategories }: { categories: Category[], s
       )}
 
       <div className="bg-white rounded-[32px] border border-slate-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto min-h-[400px]">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto scrollbar-hide min-h-[400px]">
+          <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100/50">
                 <th className="px-8 py-5 w-12 text-center">
@@ -3718,11 +3718,11 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
       <div className="min-h-screen">
         {/* Search Header */}
         <div className={cn(
-          "bg-white/90 backdrop-blur-md px-6 py-6 sticky z-[509] border-b border-slate-100 flex items-center gap-4 justify-between lg:px-12",
+          "bg-white/90 backdrop-blur-md px-4 py-4 md:px-6 md:py-6 sticky z-[509] border-b border-slate-100 flex items-center gap-3 md:gap-4 justify-between lg:px-12",
           !isPublic ? "top-[28px]" : "top-0"
         )}>
-          <div className="flex items-center gap-4">
-             <h1 className="text-xl md:text-2xl font-black text-brand-950 uppercase tracking-tighter">
+          <div className="flex items-center gap-4 shrink-0">
+             <h1 className="text-lg md:text-2xl font-black text-brand-950 uppercase tracking-tighter">
                {settings.siteTitle.split(' ')[0]}<span className="text-brand-600">{settings.siteTitle.split(' ').slice(1).join('') ? `.${settings.siteTitle.split(' ').slice(1).join('')}` : '.com'}</span>
              </h1>
           </div>
@@ -3738,25 +3738,42 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
           />
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 md:gap-6">
            <div className="hidden lg:flex flex-col text-right items-end">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Store URL</span>
               <span className="text-xs font-bold text-slate-900 lowercase tracking-tight">{domain.url}</span>
            </div>
            <div className="relative cursor-pointer group" onClick={() => setIsCheckoutOpen(true)}>
-              <ShoppingCart className="w-6 h-6 text-slate-900 group-hover:scale-110 transition-transform" />
-              <div className="absolute -top-1 -right-1 w-5 h-5 bg-brand-600 text-white rounded-full text-[10px] font-black flex items-center justify-center border-2 border-white">
+              <ShoppingCart className="w-5 h-5 md:w-6 md:h-6 text-slate-900 group-hover:scale-110 transition-transform" />
+              <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-brand-600 text-white rounded-full text-[8px] md:text-[10px] font-black flex items-center justify-center border-2 border-white">
                 {cartCount}
               </div>
            </div>
-           <button className="px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-950/10 active:scale-95 transition-all">
-             Log In
+           <button className="px-4 py-2 md:px-6 md:py-3 bg-slate-900 text-white rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-950/10 active:scale-95 transition-all">
+             Login
            </button>
         </div>
       </div>
 
+      {/* Mobile Search Bar */}
+      <div className="md:hidden bg-white px-4 pb-4 border-b border-slate-100 sticky z-[508]" style={{ top: isPublic ? '60px' : '88px' }}>
+         <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Search products..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-slate-50 border border-slate-100 rounded-2xl pl-10 pr-4 py-3 text-xs font-bold outline-none focus:bg-white focus:border-brand-600 transition-all"
+            />
+         </div>
+      </div>
+
         {/* Categories Sub-Header */}
-        <div className="bg-white border-b border-slate-100 flex justify-center py-4 px-6 md:px-12 sticky top-[108px] md:top-[124px] z-[508] shadow-sm overflow-x-auto scrollbar-hide">
+        <div className={cn(
+          "bg-white border-b border-slate-100 flex justify-center py-3 md:py-4 px-4 md:px-12 sticky z-[507] shadow-sm overflow-x-auto scrollbar-hide",
+          !isPublic ? "top-[132px] md:top-[124px]" : "top-[104px] md:top-[124px]"
+        )}>
            <div className="flex gap-8 max-w-7xl mx-auto">
               {categoriesList.map((cat, i) => (
                 <button 
@@ -3798,48 +3815,48 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                      <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Shop
                    </button>
 
-                   <div className="flex flex-col lg:flex-row gap-16 mb-24">
+                   <div className="flex flex-col lg:flex-row gap-8 md:gap-16 mb-16 md:mb-24">
                       {/* Left: Images */}
-                      <div className="lg:w-1/2 space-y-6">
-                         <div className="aspect-square bg-slate-50/50 rounded-[40px] overflow-hidden border border-slate-100 flex items-center justify-center p-12 group cursor-zoom-in relative">
+                      <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
+                         <div className="aspect-square bg-slate-50/50 rounded-[28px] md:rounded-[40px] overflow-hidden border border-slate-100 flex items-center justify-center p-6 md:p-12 group cursor-zoom-in relative">
                             {selectedProduct.image ? (
-                              <img src={selectedProduct.image} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-700" alt={selectedProduct.name} />
+                               <img src={selectedProduct.image} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-700" alt={selectedProduct.name} />
                             ) : (
-                              <PackageIcon className="w-32 h-32 text-slate-100" />
+                               <PackageIcon className="w-24 h-24 md:w-32 md:h-32 text-slate-100" />
                             )}
                          </div>
-                         <div className="flex gap-4">
-                            <div className="w-24 h-24 rounded-2xl border-2 border-[#004e89] overflow-hidden p-1 cursor-pointer bg-white shadow-md">
-                               <img src={selectedProduct.image} className="w-full h-full object-cover rounded-xl" />
+                         <div className="flex gap-3 md:gap-4">
+                            <div className="w-16 h-16 md:w-24 md:h-24 rounded-xl md:rounded-2xl border-2 border-[#004e89] overflow-hidden p-1 cursor-pointer bg-white shadow-md">
+                               <img src={selectedProduct.image} className="w-full h-full object-cover rounded-lg md:rounded-xl" />
                             </div>
                          </div>
                       </div>
 
                       {/* Right: Info */}
-                      <div className="lg:w-1/2">
-                         <div className="mb-12">
-                            <h3 className="text-4xl md:text-6xl font-serif font-black text-[#004e89] mb-8 leading-[1.1] tracking-tight">{selectedProduct.name}</h3>
-                            <div className="flex items-center gap-6">
-                               <span className="text-4xl font-black text-slate-900 font-serif tracking-tight">৳{selectedProduct.salePrice.toLocaleString()}.00</span>
+                      <div className="w-full lg:w-1/2">
+                         <div className="mb-8 md:mb-12">
+                            <h3 className="text-2xl md:text-6xl font-serif font-black text-[#004e89] mb-4 md:mb-8 leading-[1.2] md:leading-[1.1] tracking-tight">{selectedProduct.name}</h3>
+                            <div className="flex items-center gap-4 md:gap-6">
+                               <span className="text-2xl md:text-4xl font-black text-slate-900 font-serif tracking-tight">৳{selectedProduct.salePrice.toLocaleString()}.00</span>
                                {selectedProduct.regularPrice > selectedProduct.salePrice && (
-                                  <span className="text-xl text-slate-400 line-through font-medium">৳{selectedProduct.regularPrice.toLocaleString()}</span>
+                                  <span className="text-lg md:text-xl text-slate-400 line-through font-medium">৳{selectedProduct.regularPrice.toLocaleString()}</span>
                                )}
                             </div>
                          </div>
 
-                         <div className="space-y-12 mb-16">
+                         <div className="space-y-8 md:space-y-12 mb-10 md:mb-16">
                             {selectedProduct.variants && selectedProduct.variants.length > 0 && selectedProduct.variants.map((variant) => (
-                              <div key={variant.name} className="space-y-5">
-                                <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Select {variant.name.toLowerCase()} <span className="text-rose-500">*</span> :</h4>
-                                <div className="flex flex-wrap gap-3">
+                              <div key={variant.name} className="space-y-4 md:space-y-5">
+                                <h4 className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Select {variant.name.toLowerCase()} <span className="text-rose-500">*</span> :</h4>
+                                <div className="flex flex-wrap gap-2 md:gap-3">
                                   {variant.options.map((option) => (
                                     <button
                                       key={option}
                                       onClick={() => setSelectedVariants(prev => ({ ...prev, [variant.name]: option }))}
                                       className={cn(
-                                        "px-8 py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest transition-all border-2",
+                                        "px-5 py-2.5 md:px-8 md:py-3.5 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest transition-all border-2",
                                         selectedVariants[variant.name] === option 
-                                          ? "bg-[#004e89] text-white border-[#004e89] shadow-2xl shadow-[#004e89]/20" 
+                                          ? "bg-[#004e89] text-white border-[#004e89] shadow-xl md:shadow-2xl shadow-[#004e89]/20" 
                                           : "bg-white text-slate-500 border-slate-100 hover:border-slate-200"
                                       )}
                                     >
@@ -3850,43 +3867,43 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                               </div>
                             ))}
 
-                            <div className="flex items-center gap-10">
-                               <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Quantity :</h4>
-                               <div className="flex items-center border-2 border-slate-100 rounded-[24px] overflow-hidden bg-slate-50/50 p-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-10">
+                               <h4 className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Quantity :</h4>
+                               <div className="flex items-center border-2 border-slate-100 rounded-2xl md:rounded-[24px] overflow-hidden bg-slate-50/50 p-1 w-max">
                                   <button 
                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                   className="w-12 h-12 flex items-center justify-center hover:bg-white text-slate-400 hover:text-slate-900 rounded-2xl transition-all"
+                                   className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-white text-slate-400 hover:text-slate-900 rounded-xl md:rounded-2xl transition-all"
                                   >
-                                    <Minus className="w-5 h-5" />
+                                    <Minus className="w-4 h-4 md:w-5 md:h-5" />
                                   </button>
-                                  <div className="px-12 font-black text-slate-900 text-2xl min-w-[100px] text-center">
+                                  <div className="px-6 md:px-12 font-black text-slate-900 text-lg md:text-2xl min-w-[60px] md:min-w-[100px] text-center">
                                     {quantity}
                                   </div>
                                   <button 
                                    onClick={() => setQuantity(q => q + 1)}
-                                   className="w-12 h-12 flex items-center justify-center hover:bg-white text-slate-400 hover:text-slate-900 rounded-2xl transition-all"
+                                   className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-white text-slate-400 hover:text-slate-900 rounded-xl md:rounded-2xl transition-all"
                                   >
-                                    <Plus className="w-5 h-5" />
+                                    <Plus className="w-4 h-4 md:w-5 md:h-5" />
                                   </button>
                                </div>
                             </div>
 
-                            <div className="pt-12 border-t border-slate-100 grid grid-cols-[140px_1fr] gap-y-5 px-2">
-                               <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">SKU</span>
-                               <span className="text-sm text-slate-950 font-bold">mr1213</span>
+                            <div className="pt-8 md:pt-12 border-t border-slate-100 grid grid-cols-[100px_1fr] md:grid-cols-[140px_1fr] gap-y-4 md:gap-y-5 px-1 md:px-2">
+                               <span className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">SKU</span>
+                               <span className="text-xs md:text-sm text-slate-950 font-bold">{selectedProduct.productCode}</span>
                                
-                               <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</span>
-                               <span className="text-sm text-[#004e89] font-bold italic">{selectedProduct.category}</span>
+                               <span className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Category</span>
+                               <span className="text-xs md:text-sm text-[#004e89] font-bold italic">{selectedProduct.category}</span>
                                
-                               <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Inventory</span>
-                               <div className="flex items-center gap-3">
-                                 <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse ring-4 ring-emerald-500/10" />
-                                 <span className="text-sm text-emerald-600 font-black tracking-tight uppercase">In Stock (Limited)</span>
+                               <span className="text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Inventory</span>
+                               <div className="flex items-center gap-2 md:gap-3">
+                                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse ring-4 ring-emerald-500/10" />
+                                 <span className="text-[11px] md:text-sm text-emerald-600 font-black tracking-tight uppercase">In Stock</span>
                                </div>
                             </div>
                          </div>
 
-                         <div className="flex flex-col sm:flex-row gap-5">
+                         <div className="flex flex-col sm:flex-row gap-4 md:gap-5">
                             <button 
                               onClick={() => {
                                 const mandatoryMissing = selectedProduct.variants?.filter(v => v.isMandatory && !selectedVariants[v.name]);
@@ -3900,9 +3917,9 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                 setSelectedVariants({});
                                 setQuantity(1);
                               }}
-                              className="flex-1 py-6 bg-[#004e89] text-white rounded-[24px] font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:bg-[#003b68] hover:shadow-2xl hover:shadow-[#004e89]/30 transition-all active:scale-[0.98] shadow-xl"
+                              className="flex-1 py-4 md:py-6 bg-[#004e89] text-white rounded-xl md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 md:gap-4 hover:bg-[#003b68] hover:shadow-2xl hover:shadow-[#004e89]/30 transition-all active:scale-[0.98] shadow-xl"
                             >
-                               <ShoppingBag className="w-5 h-5" /> Buy Now
+                               <ShoppingBag className="w-4 h-4 md:w-5 md:h-5" /> Buy Now
                             </button>
                             <button 
                               onClick={() => {
@@ -3916,36 +3933,36 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                 setSelectedVariants({});
                                 setQuantity(1);
                               }}
-                              className="flex-1 py-6 bg-white border-2 border-[#004e89] text-[#004e89] rounded-[24px] font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:bg-[#004e89]/5 transition-all active:scale-[0.98] shadow-sm"
+                              className="flex-1 py-4 md:py-6 bg-white border-2 border-[#004e89] text-[#004e89] rounded-xl md:rounded-[24px] font-black text-[10px] md:text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 md:gap-4 hover:bg-[#004e89]/5 transition-all active:scale-[0.98] shadow-sm"
                             >
-                               <ShoppingCart className="w-5 h-5" /> Add to Cart
+                               <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" /> Add to Cart
                             </button>
-                            <button className="w-20 h-20 flex items-center justify-center border-2 border-slate-100 rounded-[24px] text-slate-300 hover:text-[#004e89] hover:bg-slate-50 transition-all shrink-0">
-                              <Share2 className="w-6 h-6" />
+                            <button className="hidden sm:flex w-16 h-16 md:w-20 md:h-20 items-center justify-center border-2 border-slate-100 rounded-xl md:rounded-[24px] text-slate-300 hover:text-[#004e89] hover:bg-slate-50 transition-all shrink-0">
+                               <Share2 className="w-5 h-5 md:w-6 md:h-6" />
                             </button>
                          </div>
                       </div>
                    </div>
 
                    {/* Description Section */}
-                   <div className="mb-40 pt-20 border-t border-slate-50">
-                      <div className="flex justify-center mb-16">
-                         <div className="px-20 py-4 bg-slate-50 border border-slate-100 rounded-3xl font-black text-slate-900 uppercase tracking-[0.3em] text-xs shadow-sm">
+                   <div className="mb-20 md:mb-40 pt-10 md:pt-20 border-t border-slate-50">
+                      <div className="flex justify-center mb-8 md:mb-16">
+                         <div className="px-10 md:px-20 py-3 md:py-4 bg-slate-50 border border-slate-100 rounded-2xl md:rounded-3xl font-black text-slate-900 uppercase tracking-[0.3em] text-[10px] md:text-xs shadow-sm">
                             Description
                          </div>
                       </div>
-                      <div className="max-w-4xl mx-auto text-center px-6">
-                         <p className="text-xl md:text-3xl text-slate-500 leading-[1.6] font-medium font-serif italic">
+                      <div className="max-w-4xl mx-auto text-center px-4 md:px-6">
+                         <p className="text-sm md:text-3xl text-slate-500 leading-relaxed md:leading-[1.6] font-medium font-serif italic">
                             "{selectedProduct.name} একটি স্মার্ট রোবট ভ্যাকুয়াম ক্লিনার যা ঝাট ও ভ্যাকুয়াম—দু’ধরনের পরিষ্কারই করতে পারে। এতে রয়েছে স্বয়ংক্রিয় সাইড ব্রাশ, অবস্ট্যাকল এভয়ডেন্স সেন্সর ও কম শব্দে কাজ করার প্রযুক্তি। এক বোতামে সহজ অপারেশন, ইউএসবি চার্জিং সুবিধা এবং কাঠ, টাইলস ও শক্ত মেঝেতে কার্যকর পরিষ্কার—দৈনন্দিন ঘর পরিষ্কারের ঝামেলা কমাতে আদর্শ সমাধান।"
                          </p>
                       </div>
                    </div>
 
                    {/* Related Products */}
-                   <div className="pt-24 border-t-4 border-slate-100">
-                      <h3 className="text-6xl md:text-8xl font-serif font-black text-slate-950 text-center mb-24 tracking-tighter">Related Products</h3>
+                   <div className="pt-12 md:pt-24 border-t-4 border-slate-100">
+                      <h3 className="text-3xl md:text-8xl font-serif font-black text-slate-950 text-center mb-12 md:mb-24 tracking-tighter">Related Products</h3>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-12">
                          {products
                            .filter(p => (p.category === selectedProduct.category || products.length <= 4) && p.id !== selectedProduct.id)
                            .slice(0, 4)
@@ -3958,17 +3975,17 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                  }}
                                  className="group cursor-pointer flex flex-col"
                               >
-                                 <div className="aspect-square bg-slate-50 rounded-[48px] overflow-hidden mb-8 relative border border-slate-50 shadow-sm group-hover:shadow-2xl group-hover:-translate-y-3 transition-all duration-500">
+                                 <div className="aspect-square bg-slate-50 rounded-[24px] md:rounded-[48px] overflow-hidden mb-4 md:mb-8 relative border border-slate-50 shadow-sm group-hover:shadow-2xl md:group-hover:-translate-y-3 transition-all duration-500">
                                     <img src={relProduct.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={relProduct.name} />
                                     <div className="absolute inset-0 bg-[#004e89]/0 group-hover:bg-[#004e89]/10 transition-colors" />
-                                    <div className="absolute top-6 right-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                                       <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#004e89] shadow-2xl">
-                                          <ShoppingBag className="w-6 h-6" />
+                                    <div className="absolute top-4 right-4 md:top-6 md:right-6 translate-y-4 opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300">
+                                       <div className="w-8 h-8 md:w-12 md:h-12 bg-white rounded-lg md:rounded-2xl flex items-center justify-center text-[#004e89] shadow-2xl">
+                                          <ShoppingBag className="w-4 h-4 md:w-6 md:h-6" />
                                        </div>
                                     </div>
                                  </div>
-                                 <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#004e89] transition-colors line-clamp-1 font-serif px-2">{relProduct.name}</h4>
-                                 <p className="text-[#004e89] font-black text-2xl tracking-tighter px-2">৳{relProduct.salePrice.toLocaleString()}</p>
+                                 <h4 className="text-sm md:text-xl font-bold text-slate-900 mb-1 md:mb-2 group-hover:text-[#004e89] transition-colors line-clamp-1 font-serif px-1 md:px-2">{relProduct.name}</h4>
+                                 <p className="text-[#004e89] font-black text-base md:text-2xl tracking-tighter px-1 md:px-2">৳{relProduct.salePrice.toLocaleString()}</p>
                               </div>
                            ))
                          }
@@ -3979,22 +3996,22 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                 <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                    {/* Banner Section */}
                    <div className="p-4 md:p-8">
-                      <div className="w-full h-56 md:h-[450px] bg-slate-100 rounded-[40px] relative overflow-hidden group shadow-sm">
+                      <div className="w-full h-72 md:h-[450px] bg-slate-100 rounded-[32px] md:rounded-[40px] relative overflow-hidden group shadow-sm">
                          <img 
                            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2070" 
                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                            alt="banner"
                          />
-                         <div className="absolute inset-0 bg-black/20" />
-                         <div className="relative z-10 h-full flex flex-col justify-center px-12 md:px-24">
-                           <span className="bg-brand-600 text-white font-black text-[10px] uppercase tracking-[0.3em] px-4 py-2 rounded-full w-max mb-6 animate-in slide-in-from-left duration-500">#Big Fashion Sale</span>
-                           <h2 className="text-4xl md:text-7xl font-black text-white leading-[0.9] mb-6 tracking-tighter max-w-md animate-in slide-in-from-left-4 duration-700">
+                         <div className="absolute inset-0 bg-black/30 md:bg-black/20" />
+                         <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-24">
+                           <span className="bg-brand-600 text-white font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] px-3 py-1.5 md:px-4 md:py-2 rounded-full w-max mb-4 md:mb-6 animate-in slide-in-from-left duration-500">#Big Fashion Sale</span>
+                           <h2 className="text-3xl md:text-7xl font-black text-white leading-[1] md:leading-[0.9] mb-4 md:mb-6 tracking-tighter max-w-xs md:max-w-md animate-in slide-in-from-left-4 duration-700">
                              {settings.siteTitle} <br /> Marketplace
                            </h2>
-                           <p className="text-white/80 text-sm md:text-lg font-bold mb-10 tracking-tight animate-in slide-in-from-left-8 duration-1000">{settings.description}</p>
-                           <div className="flex gap-4">
-                             <button className="px-10 py-5 bg-white text-slate-950 rounded-3xl font-black text-[11px] uppercase tracking-widest shadow-2xl hover:bg-brand-50 transition-all active:scale-95">Shop Now</button>
-                             <button className="px-10 py-5 bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-3xl font-black text-[11px] uppercase tracking-widest hover:bg-white/30 transition-all active:scale-95">Explore Collection</button>
+                           <p className="text-white/80 text-xs md:text-lg font-bold mb-6 md:mb-10 tracking-tight max-w-xs md:max-w-none animate-in slide-in-from-left-8 duration-1000">{settings.description}</p>
+                           <div className="flex gap-3 md:gap-4">
+                             <button className="px-6 py-3.5 md:px-10 md:py-5 bg-white text-slate-950 rounded-2xl md:rounded-3xl font-black text-[9px] md:text-[11px] uppercase tracking-widest shadow-2xl hover:bg-brand-50 transition-all active:scale-95">Shop Now</button>
+                             <button className="px-6 py-3.5 md:px-10 md:py-5 bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-2xl md:rounded-3xl font-black text-[9px] md:text-[11px] uppercase tracking-widest hover:bg-white/30 transition-all active:scale-95 hidden sm:block">Explore</button>
                            </div>
                          </div>
                       </div>
@@ -4299,13 +4316,13 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                            {/* Left Column: Forms */}
                            <div className="space-y-8">
                               {/* Customer Information */}
-                              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                              <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
                                  <div className="absolute top-0 left-0 w-1 h-full bg-[#004e89] opacity-20 group-hover:opacity-100 transition-opacity" />
-                                 <div className="flex items-center gap-4 mb-8">
-                                    <div className="w-8 h-8 bg-[#004e89] text-white rounded-full flex items-center justify-center text-xs font-black">1</div>
-                                    <h4 className="text-lg font-serif font-bold text-[#004e89]">Customer Information</h4>
+                                 <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                                    <div className="w-7 h-7 md:w-8 md:h-8 bg-[#004e89] text-white rounded-full flex items-center justify-center text-[10px] md:text-xs font-black">1</div>
+                                    <h4 className="text-base md:text-lg font-serif font-bold text-[#004e89]">Customer Information</h4>
                                  </div>
-                                 <div className="space-y-5">
+                                 <div className="space-y-4 md:space-y-5">
                                     <div>
                                        <input 
                                           required
@@ -4313,7 +4330,7 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                           placeholder="Full Name *" 
                                           value={customerInfo.name}
                                           onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                                          className="w-full px-6 py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-slate-900 placeholder:text-slate-400 shadow-sm"
+                                          className="w-full px-5 py-3.5 md:px-6 md:py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-sm md:text-base text-slate-900 placeholder:text-slate-400 shadow-sm"
                                        />
                                     </div>
                                     <div>
@@ -4339,13 +4356,13 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                               </div>
 
                               {/* Shipping Address */}
-                              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                              <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
                                  <div className="absolute top-0 left-0 w-1 h-full bg-[#004e89] opacity-20 group-hover:opacity-100 transition-opacity" />
-                                 <div className="flex items-center gap-4 mb-8">
-                                    <div className="w-8 h-8 bg-[#004e89] text-white rounded-full flex items-center justify-center text-xs font-black">2</div>
-                                    <h4 className="text-lg font-serif font-bold text-[#004e89]">Shipping Address</h4>
+                                 <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                                    <div className="w-7 h-7 md:w-8 md:h-8 bg-[#004e89] text-white rounded-full flex items-center justify-center text-[10px] md:text-xs font-black">2</div>
+                                    <h4 className="text-base md:text-lg font-serif font-bold text-[#004e89]">Shipping Address</h4>
                                  </div>
-                                 <div className="space-y-5">
+                                 <div className="space-y-4 md:space-y-5">
                                     <div>
                                        <input 
                                           required
@@ -4353,17 +4370,17 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                           placeholder="Address *" 
                                           value={customerInfo.address}
                                           onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
-                                          className="w-full px-6 py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-slate-900 placeholder:text-slate-400 shadow-sm"
+                                          className="w-full px-5 py-3.5 md:px-6 md:py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-sm md:text-base text-slate-900 placeholder:text-slate-400 shadow-sm"
                                        />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                        <input 
                                           required
                                           type="text" 
                                           placeholder="City *" 
                                           value={customerInfo.city}
                                           onChange={(e) => setCustomerInfo({...customerInfo, city: e.target.value})}
-                                          className="w-full px-6 py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-slate-900 placeholder:text-slate-400 shadow-sm"
+                                          className="w-full px-5 py-3.5 md:px-6 md:py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-sm md:text-base text-slate-900 placeholder:text-slate-400 shadow-sm"
                                        />
                                        <input 
                                           required
@@ -4371,7 +4388,7 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                                           placeholder="Region *" 
                                           value={customerInfo.region}
                                           onChange={(e) => setCustomerInfo({...customerInfo, region: e.target.value})}
-                                          className="w-full px-6 py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-slate-900 placeholder:text-slate-400 shadow-sm"
+                                          className="w-full px-5 py-3.5 md:px-6 md:py-4 bg-white border border-slate-100 rounded-xl outline-none focus:border-[#004e89] focus:ring-4 focus:ring-[#004e89]/5 transition-all font-medium text-sm md:text-base text-slate-900 placeholder:text-slate-400 shadow-sm"
                                        />
                                     </div>
                                  </div>
@@ -4379,8 +4396,8 @@ const StorefrontPreview = ({ domain, products, onClose, settings, categories: av
                            </div>
 
                            {/* Right Column: Summary */}
-                           <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm h-max lg:sticky lg:top-8">
-                              <h4 className="text-lg font-serif font-bold text-[#004e89] mb-8">Order Summary</h4>
+                           <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm h-max lg:sticky lg:top-8">
+                              <h4 className="text-base md:text-lg font-serif font-bold text-[#004e89] mb-6 md:mb-8">Order Summary</h4>
                               
                               <div className="space-y-4 mb-8">
                                  {cart.map((item, idx) => (
