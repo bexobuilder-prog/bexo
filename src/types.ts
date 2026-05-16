@@ -4,6 +4,7 @@ export type View =
   | 'customer-history' 
   | 'ecommerce' 
   | 'sales' 
+  | 'orders'
   | 'product' 
   | 'supplier' 
   | 'category' 
@@ -123,6 +124,27 @@ export interface Domain {
   template: string;
   status: 'ACTIVE' | 'INACTIVE';
   createdAt: string;
+}
+
+export interface OrderItem {
+  productId: string;
+  name: string;
+  quantity: number;
+  price: number;
+  image: string;
+}
+
+export interface Order {
+  id: string;
+  customerName: string;
+  phone: string;
+  address: string;
+  items: OrderItem[];
+  total: number;
+  status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+  paymentMethod: string;
+  createdAt: string;
+  domainUrl: string;
 }
 
 export interface PaymentMethod {
